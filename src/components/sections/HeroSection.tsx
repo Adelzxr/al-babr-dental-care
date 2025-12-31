@@ -20,8 +20,8 @@ const HeroSection = () => {
           alt="Modern dental clinic interior"
           className="w-full h-full object-cover scale-105 animate-[pulse_20s_ease-in-out_infinite]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/95 via-foreground/80 to-foreground/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-slate-900/50 dark:from-slate-950/95 dark:via-slate-950/80 dark:to-slate-950/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent dark:from-slate-950/30" />
       </div>
 
       {/* Animated Gradient Orbs */}
@@ -36,7 +36,7 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-2xl text-background">
+        <div className="max-w-2xl">
           {/* Trust Badge with Glow */}
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2.5 mb-8 animate-fade-in shadow-lg group hover:bg-white/15 transition-all duration-300 cursor-default">
             <div className="flex -space-x-1">
@@ -60,16 +60,16 @@ const HeroSection = () => {
           {/* Main Title with Typewriter */}
           <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6">
             {showTitle1 ? (
-              <span className="text-white block animate-slide-up">
+              <span className="text-white dark:text-slate-100 block animate-slide-up">
                 <TypewriterText 
                   text={t('hero.title1')} 
                   speed={80}
-                  className="text-white"
+                  className="text-white dark:text-slate-100"
                   onComplete={() => setShowTitle2(true)}
                 />
               </span>
             ) : (
-              <span className="text-white/20 block">{t('hero.title1')}</span>
+              <span className="text-white/20 dark:text-slate-100/20 block">{t('hero.title1')}</span>
             )}
             {showTitle2 ? (
               <span className="block mt-2 animate-slide-up">
@@ -84,11 +84,11 @@ const HeroSection = () => {
             )}
           </h1>
 
-          <p className="text-xl md:text-2xl text-white/90 mb-3 animate-slide-up font-medium" style={{ animationDelay: "0.1s" }}>
+          <p className="text-xl md:text-2xl text-white/90 dark:text-slate-100/90 mb-3 animate-slide-up font-medium" style={{ animationDelay: "0.1s" }}>
             {t('hero.clinic')}
           </p>
 
-          <p className="text-lg text-white/70 mb-8 leading-relaxed max-w-xl animate-slide-up" style={{ animationDelay: "0.2s" }}>
+          <p className="text-lg text-white/70 dark:text-slate-200/80 mb-8 leading-relaxed max-w-xl animate-slide-up" style={{ animationDelay: "0.2s" }}>
             {t('hero.description')}
           </p>
 
@@ -101,10 +101,10 @@ const HeroSection = () => {
             ].map((feature, index) => (
               <div 
                 key={feature.text} 
-                className="group flex items-center gap-2 text-sm text-white/80 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2.5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-default hover:scale-105"
+                className="group flex items-center gap-2 text-sm text-white/80 dark:text-slate-100/90 bg-white/5 dark:bg-white/10 backdrop-blur-sm rounded-full px-4 py-2.5 border border-white/10 dark:border-white/20 hover:bg-white/10 dark:hover:bg-white/15 hover:border-white/20 dark:hover:border-white/30 transition-all duration-300 cursor-default hover:scale-105"
                 style={{ animationDelay: `${0.4 + index * 0.1}s` }}
               >
-                <feature.icon className={`w-4 h-4 text-secondary transition-colors duration-300 ${feature.color}`} />
+                <feature.icon className={`w-4 h-4 text-secondary dark:text-secondary transition-colors duration-300 ${feature.color}`} />
                 <span>{feature.text}</span>
               </div>
             ))}
@@ -128,9 +128,9 @@ const HeroSection = () => {
               <Button 
                 variant="outline" 
                 size="xl" 
-                className="group border-2 border-white/30 bg-white/5 backdrop-blur-sm text-white hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all duration-300 px-8"
+                className="group border-2 border-white/30 dark:border-white/40 bg-white/5 dark:bg-white/10 backdrop-blur-sm text-white dark:text-slate-100 hover:bg-white/10 dark:hover:bg-white/15 hover:border-white/50 dark:hover:border-white/60 hover:scale-105 transition-all duration-300 px-8"
               >
-                <span className="group-hover:text-primary transition-colors">{t('hero.meetDoctor')}</span>
+                <span className="group-hover:text-primary dark:group-hover:text-primary transition-colors">{t('hero.meetDoctor')}</span>
               </Button>
             </Link>
           </div>
@@ -144,8 +144,8 @@ const HeroSection = () => {
               </div>
             </div>
             <div>
-              <p className="text-white/60 text-sm">{t('hero.callUs')}</p>
-              <a href="tel:+1234567890" className="text-white font-semibold text-lg hover:text-primary transition-colors">
+              <p className="text-white/60 dark:text-slate-200/70 text-sm">{t('hero.callUs')}</p>
+              <a href="tel:+1234567890" className="text-white dark:text-slate-100 font-semibold text-lg hover:text-primary dark:hover:text-primary transition-colors">
                 +123 456 7890
               </a>
             </div>
