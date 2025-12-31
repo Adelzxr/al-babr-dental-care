@@ -102,7 +102,16 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   }, [language, isRTL]);
 
   const toggleLanguage = () => {
-    setLanguage(prev => prev === 'en' ? 'ar' : 'en');
+    setLanguage(prev => {
+      const newLang = prev === 'en' ? 'ar' : 'en';
+      localStorage.setItem('language', newLang);
+      // Update document direction and language immediately
+      document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = newLang;
+      // Refresh the page to apply language changes everywhere
+      window.location.reload();
+      return newLang;
+    });
   };
 
   const t = (key: string): string => {
