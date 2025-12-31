@@ -3,7 +3,8 @@ import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Award, GraduationCap, Users, Heart, CheckCircle, Calendar } from "lucide-react";
-import drAhmedImage from "@/assets/dr-ahmed.jpg";
+
+const drAhmedImage = "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&h=1000&fit=crop&q=80";
 
 const qualifications = [
   "Doctor of Dental Surgery (DDS)",
