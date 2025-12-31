@@ -1,0 +1,7 @@
+{
+  "watch": ["src"],
+  "ext": "ts,tsx,js,jsx,json",
+  "ignore": ["src/**/*.spec.ts", "node_modules"],
+  "exec": "vite",
+  "delay": "1000"
+}

@@ -8,6 +8,7 @@ import About from "./pages/About";
 import BookAppointment from "./pages/BookAppointment";
 import DentalAdvice from "./pages/DentalAdvice";
 import Contact from "./pages/Contact";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/book" element={<BookAppointment />} />
           <Route path="/advice" element={<DentalAdvice />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -8,8 +8,9 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { CalendarIcon, Clock, CheckCircle, Phone, User, MessageSquare } from "lucide-react";
+import { CalendarIcon, Clock, CheckCircle, Phone, User, MessageSquare, Mail, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useCreateAppointment, useBookedTimeSlots } from "@/hooks/use-appointments";
 
 const timeSlots = [
   "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
@@ -22,11 +23,18 @@ const BookAppointment = () => {
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  
+  // Supabase hooks
+  const createAppointment = useCreateAppointment();
+  const { data: bookedSlots = [] } = useBookedTimeSlots(
+    date ? format(date, "yyyy-MM-dd") : ""
+  );
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!date || !selectedTime || !name || !phone) {
@@ -38,12 +46,39 @@ const BookAppointment = () => {
       return;
     }
 
-    // Simulate booking submission
-    setIsSubmitted(true);
-    toast({
-      title: "Appointment Booked!",
-      description: `Your appointment has been scheduled for ${format(date, "PPP")} at ${selectedTime}.`,
-    });
+    try {
+      await createAppointment.mutateAsync({
+        patient_name: name,
+        phone,
+        email: email || null,
+        appointment_date: format(date, "yyyy-MM-dd"),
+        appointment_time: selectedTime,
+        message: message || null,
+        status: "pending",
+      });
+
+      setIsSubmitted(true);
+      toast({
+        title: "Appointment Booked!",
+        description: `Your appointment has been scheduled for ${format(date, "PPP")} at ${selectedTime}.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Booking Failed",
+        description: error instanceof Error ? error.message : "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const resetForm = () => {
+    setIsSubmitted(false);
+    setDate(undefined);
+    setSelectedTime("");
+    setName("");
+    setPhone("");
+    setEmail("");
+    setMessage("");
   };
 
   if (isSubmitted) {
@@ -70,7 +105,7 @@ const BookAppointment = () => {
                 <p className="text-sm text-muted-foreground mb-8">
                   We'll contact you at <strong>{phone}</strong> to confirm your appointment.
                 </p>
-                <Button onClick={() => setIsSubmitted(false)} variant="outline" size="lg">
+                <Button onClick={resetForm} variant="outline" size="lg">
                   Book Another Appointment
                 </Button>
               </div>
@@ -139,22 +174,33 @@ const BookAppointment = () => {
                       Select Time
                     </h3>
                     <div className="grid grid-cols-3 gap-2">
-                      {timeSlots.map((time) => (
-                        <button
-                          key={time}
-                          type="button"
-                          onClick={() => setSelectedTime(time)}
-                          className={cn(
-                            "py-2 px-3 text-sm rounded-lg border transition-all",
-                            selectedTime === time
-                              ? "bg-primary text-primary-foreground border-primary"
-                              : "bg-background border-border hover:border-primary hover:text-primary"
-                          )}
-                        >
-                          {time}
-                        </button>
-                      ))}
+                      {timeSlots.map((time) => {
+                        const isBooked = bookedSlots.includes(time);
+                        return (
+                          <button
+                            key={time}
+                            type="button"
+                            onClick={() => !isBooked && setSelectedTime(time)}
+                            disabled={isBooked}
+                            className={cn(
+                              "py-2 px-3 text-sm rounded-lg border transition-all",
+                              isBooked
+                                ? "bg-muted text-muted-foreground border-muted cursor-not-allowed line-through opacity-50"
+                                : selectedTime === time
+                                ? "bg-primary text-primary-foreground border-primary"
+                                : "bg-background border-border hover:border-primary hover:text-primary"
+                            )}
+                          >
+                            {time}
+                          </button>
+                        );
+                      })}
                     </div>
+                    {date && bookedSlots.length > 0 && (
+                      <p className="text-xs text-muted-foreground mt-3">
+                        * Crossed out times are already booked
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -194,6 +240,20 @@ const BookAppointment = () => {
 
                       <div>
                         <label className="text-sm font-medium mb-2 flex items-center gap-2">
+                          <Mail className="w-4 h-4 text-muted-foreground" />
+                          Email (Optional)
+                        </label>
+                        <Input
+                          type="email"
+                          placeholder="Enter your email address"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          className="h-12"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="text-sm font-medium mb-2 flex items-center gap-2">
                           <MessageSquare className="w-4 h-4 text-muted-foreground" />
                           Message (Optional)
                         </label>
@@ -207,8 +267,21 @@ const BookAppointment = () => {
                     </div>
                   </div>
 
-                  <Button type="submit" variant="default" size="xl" className="w-full">
-                    Confirm Appointment
+                  <Button 
+                    type="submit" 
+                    variant="default" 
+                    size="xl" 
+                    className="w-full"
+                    disabled={createAppointment.isPending}
+                  >
+                    {createAppointment.isPending ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Booking...
+                      </>
+                    ) : (
+                      "Confirm Appointment"
+                    )}
                   </Button>
 
                   <p className="text-xs text-center text-muted-foreground">

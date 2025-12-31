@@ -3,9 +3,10 @@ import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useCreateContactMessage } from "@/hooks/use-contact";
 
 const contactInfo = [
   {
@@ -40,8 +41,9 @@ const Contact = () => {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const { toast } = useToast();
+  const createContactMessage = useCreateContactMessage();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!name || !email || !message) {
@@ -53,15 +55,30 @@ const Contact = () => {
       return;
     }
 
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for contacting us. We'll get back to you soon.",
-    });
+    try {
+      await createContactMessage.mutateAsync({
+        name,
+        email,
+        subject: subject || null,
+        message,
+      });
 
-    setName("");
-    setEmail("");
-    setSubject("");
-    setMessage("");
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for contacting us. We'll get back to you soon.",
+      });
+
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch (error) {
+      toast({
+        title: "Failed to Send",
+        description: error instanceof Error ? error.message : "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -156,9 +173,24 @@ const Contact = () => {
                       required
                     />
                   </div>
-                  <Button type="submit" variant="default" size="lg" className="w-full">
-                    <Send className="w-4 h-4" />
-                    Send Message
+                  <Button 
+                    type="submit" 
+                    variant="default" 
+                    size="lg" 
+                    className="w-full"
+                    disabled={createContactMessage.isPending}
+                  >
+                    {createContactMessage.isPending ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        Send Message
+                      </>
+                    )}
                   </Button>
                 </form>
               </div>
