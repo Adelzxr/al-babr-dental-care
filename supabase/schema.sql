@@ -1,4 +1,4 @@
--- Al-Babr Dental Clinic - Supabase Database Schema
+-- Al-Bader Dental Clinic - Supabase Database Schema
 -- Run this SQL in your Supabase SQL Editor
 
 -- =============================================

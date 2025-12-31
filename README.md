@@ -1,4 +1,4 @@
-# Al-Babr Dental Clinic
+# Al-Bader Dental Clinic
 
 A modern, professional dental clinic website built with React, TypeScript, and Supabase.
 

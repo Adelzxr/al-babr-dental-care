@@ -21,7 +21,7 @@ export const translations: Translations = {
   'hero.trusted': { en: 'Trusted by 1000+ Happy Patients', ar: 'موثوق من قبل أكثر من 1000 مريض سعيد' },
   'hero.title1': { en: 'Your Smile,', ar: 'ابتسامتك،' },
   'hero.title2': { en: 'Our Priority', ar: 'أولويتنا' },
-  'hero.clinic': { en: 'Al-Babr Dental Clinic', ar: 'عيادة البابر لطب الأسنان' },
+  'hero.clinic': { en: 'Al-Bader Dental Clinic', ar: 'عيادة البادر لطب الأسنان' },
   'hero.description': { 
     en: 'Experience exceptional dental care with Dr. Ahmed. We combine modern technology with a gentle, personalized approach for your comfort.', 
     ar: 'استمتع برعاية أسنان استثنائية مع الدكتور أحمد. نجمع بين التكنولوجيا الحديثة والنهج اللطيف والشخصي لراحتك.' 

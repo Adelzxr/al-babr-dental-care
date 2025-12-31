@@ -100,7 +100,7 @@ const AdminDashboard = () => {
               <LayoutDashboard className="w-8 h-8 text-white" />
             </div>
             <CardTitle className="text-2xl text-white">Admin Dashboard</CardTitle>
-            <CardDescription className="text-slate-400">Al-Babr Dental Clinic</CardDescription>
+            <CardDescription className="text-slate-400">Al-Bader Dental Clinic</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
             <span className="text-white font-bold">AB</span>
           </div>
           <div>
-            <h2 className="font-semibold text-white">Al-Babr</h2>
+            <h2 className="font-semibold text-white">Al-Bader</h2>
             <p className="text-xs text-slate-400">Admin Panel</p>
           </div>
         </div>

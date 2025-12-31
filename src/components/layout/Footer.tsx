@@ -43,7 +43,7 @@ const Footer = () => {
               </div>
               <div>
                 <h3 className="font-serif text-2xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text">
-                  {language === 'ar' ? 'البابر' : 'Al-Babr'}
+                  {language === 'ar' ? 'البادر' : 'Al-Bader'}
                 </h3>
                 <p className="text-sm text-white/60">{language === 'ar' ? 'عيادة أسنان' : 'Dental Clinic'}</p>
               </div>
@@ -154,7 +154,7 @@ const Footer = () => {
 
         <div className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-white/50">
-            © {new Date().getFullYear()} {language === 'ar' ? 'عيادة البابر لطب الأسنان. جميع الحقوق محفوظة.' : 'Al-Babr Dental Clinic. All rights reserved.'}
+            © {new Date().getFullYear()} {language === 'ar' ? 'عيادة البادر لطب الأسنان. جميع الحقوق محفوظة.' : 'Al-Bader Dental Clinic. All rights reserved.'}
           </p>
           <div className="flex items-center gap-6 text-sm text-white/50">
             <Link to="/admin" className="hover:text-primary transition-colors hover:scale-105 transform">

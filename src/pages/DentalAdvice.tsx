@@ -59,7 +59,7 @@ const DentalAdvicePage = () => {
 
                 <div className="mt-12 p-6 bg-accent/30 rounded-xl">
                   <p className="text-sm text-muted-foreground">
-                    <strong>Dr. Ahmed</strong> • Al-Babr Dental Clinic
+                    <strong>Dr. Ahmed</strong> • Al-Bader Dental Clinic
                   </p>
                   <p className="text-sm text-muted-foreground mt-2">
                     Have questions about this topic? Book a consultation to discuss your dental health.

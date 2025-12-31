@@ -75,7 +75,7 @@ const About = () => {
                   for dental health drives him to continuously expand his knowledge and skills.
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
-                  At Al-Babr Dental Clinic, we believe that every patient deserves personalized 
+                  At Al-Bader Dental Clinic, we believe that every patient deserves personalized 
                   attention and the highest quality of care. Dr. Ahmed takes the time to understand 
                   your concerns, explain treatment options, and ensure you feel comfortable throughout 
                   your dental journey.
